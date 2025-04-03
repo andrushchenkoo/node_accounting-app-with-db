@@ -39,8 +39,19 @@ const deleteExpense = async (id) => {
   await Expense.destroy({ where: { id: id } });
 };
 
-const updateExpense = (expense, body) => {
-  return Object.assign(expense, body);
+// const updateExpense = (expense, body) => {
+//   return Object.assign(expense, body);
+// };
+const updateExpense = async (id, body) => {
+  const [updatedCount] = await Expense.update(body, { where: { id: id } });
+
+  if (updatedCount > 0) {
+    const updatedExpense = await getExpenseById(id);
+
+    return updatedExpense;
+  }
+
+  return null;
 };
 
 module.exports = {

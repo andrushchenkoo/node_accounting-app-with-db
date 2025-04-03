@@ -42,10 +42,10 @@ const deleteExpense = async (req, res) => {
   return res.status(204).send();
 };
 
-const updateExpense = (req, res) => {
-  return res
-    .status(200)
-    .json(expenseModel.updateExpense(req.expense, req.body));
+const updateExpense = async (req, res) => {
+  const result = await expenseModel.updateExpense(+req.params.id, req.body);
+
+  return res.status(200).json(result);
 };
 
 module.exports = {
