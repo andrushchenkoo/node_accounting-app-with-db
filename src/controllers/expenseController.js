@@ -1,11 +1,16 @@
-const expenseModel = require('../models/expenseModel');
+const expenseService = require('../services/expense.service');
 const { User } = require('../models/User.model');
 
 const requestProperties = ['userId', 'spentAt', 'title', 'amount'];
 
 const getExpenses = async (req, res) => {
   const { userId, categories, from, to } = req.query;
-  const expenses = await expenseModel.getExpenses(userId, categories, from, to);
+  const expenses = await expenseService.getExpenses(
+    userId,
+    categories,
+    from,
+    to,
+  );
 
   return res.json(expenses);
 };
@@ -31,19 +36,19 @@ const createExpense = async (req, res) => {
       .json({ error: 'No required fields or user not exist' });
   }
 
-  const result = await expenseModel.createExpense(req.body);
+  const result = await expenseService.createExpense(req.body);
 
   return res.status(201).json(result);
 };
 
 const deleteExpense = async (req, res) => {
-  await expenseModel.deleteExpense(+req.params.id);
+  await expenseService.deleteExpense(+req.params.id);
 
   return res.status(204).send();
 };
 
 const updateExpense = async (req, res) => {
-  const result = await expenseModel.updateExpense(+req.params.id, req.body);
+  const result = await expenseService.updateExpense(+req.params.id, req.body);
 
   return res.status(200).json(result);
 };

@@ -1,5 +1,5 @@
 const { Op } = require('sequelize');
-const { Expense } = require('./Expense.model');
+const { Expense } = require('../models/Expense.model');
 
 const getExpenses = async (id, categories, from, to) => {
   const where = {};

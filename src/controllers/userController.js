@@ -1,7 +1,7 @@
-const userModel = require('../models/userModel');
+const userService = require('../services/user.service');
 
 const getAllUsers = async (req, res) => {
-  const users = await userModel.getAllUsers();
+  const users = await userService.getAllUsers();
 
   res.json(users);
 };
@@ -19,18 +19,18 @@ const createUser = async (req, res) => {
     return res.status(400).json({ error: 'Name is required' });
   }
 
-  const newUser = await userModel.createUser(req.body);
+  const newUser = await userService.createUser(req.body);
 
   res.status(201).json(newUser);
 };
 
 const deleteUser = async (req, res) => {
-  await userModel.deleteUser(req.params.id);
+  await userService.deleteUser(req.params.id);
   res.status(204).send();
 };
 
 const updateUser = async (req, res) => {
-  const updatedUser = await userModel.updateUser(req.params.id, req.body);
+  const updatedUser = await userService.updateUser(req.params.id, req.body);
 
   if (!updatedUser) {
     return res.status(404).json({ error: 'User not found' });
